@@ -14,6 +14,7 @@ def make_preprocessor(df,
                       remainder='passthrough',
                       sparse=True):
     """Make preprocessing pipeline for numeric, binary, and categorical features
+       Returns preprocessor and number of features after transform
        Standardize numeric values
        Impute missing numeric and binary values using specified strategy
        One-hot or ordinal encode categorical features
@@ -62,4 +63,16 @@ def make_preprocessor(df,
         ('cat', categorical_transformer, categorical_features)
     ], remainder=remainder)
 
-    return preprocessor
+    # Calculate number of features after transform
+    flatten = lambda l: [x for subl in l for x in subl]
+    n_numeric_features = len(numeric_features)
+    n_binary_features = len(binary_features)
+    n_categorical_features = {
+        'ohe': len(flatten(categories))
+        'ord': len(categorical_features)
+    }
+    n_features = (n_numeric_features +
+                  n_binary_features +
+                  n_categorical_features['cat_transform'])
+
+    return preprocessor, n_features
