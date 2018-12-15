@@ -73,6 +73,6 @@ def make_preprocessor(df,
     }
     n_features = (n_numeric_features +
                   n_binary_features +
-                  n_categorical_features['cat_transform'])
+                  n_categorical_features[cat_transform])
 
     return preprocessor, n_features
