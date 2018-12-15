@@ -11,7 +11,8 @@ def make_preprocessor(df,
                       categorical_features,
                       strategy='median',
                       cat_transform='ohe',
-                      remainder='passthrough'):
+                      remainder='passthrough',
+                      sparse=True):
     """Make preprocessing pipeline for numeric, binary, and categorical features
        Standardize numeric values
        Impute missing numeric and binary values using specified strategy
@@ -28,9 +29,11 @@ def make_preprocessor(df,
 
        strategy: {'mean', 'median', 'most_frequent'} - imputation strategy
 
-       cat_transform: {'ohe', 'ord'} - One-hot or ordinal encode categorical
+       cat_transform: {'ohe', 'ord'} - one-hot or ordinal encode categorical
 
        remainder: {'drop', 'passthrough'} - drop or keep columns not transformed
+
+       sparse: {True, False} - one-hot encoder return sparse or dense
     """
 
     numeric_transformer = Pipeline(steps=[
@@ -45,7 +48,7 @@ def make_preprocessor(df,
     categories = [df[feature].unique() for feature in categorical_features]
 
     cat_transformers = {
-        'ohe': ('ohe', OneHotEncoder(categories=categories, sparse=True)),
+        'ohe': ('ohe', OneHotEncoder(categories=categories, sparse=sparse)),
         'ord': ('ord', OrdinalEncoder(categories=categories))
     }
 
