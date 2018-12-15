@@ -68,7 +68,7 @@ def make_preprocessor(df,
     n_numeric_features = len(numeric_features)
     n_binary_features = len(binary_features)
     n_categorical_features = {
-        'ohe': len(flatten(categories))
+        'ohe': len(flatten(categories)),
         'ord': len(categorical_features)
     }
     n_features = (n_numeric_features +
